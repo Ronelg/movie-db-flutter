@@ -1,0 +1,8 @@
+add to class
+ part 'movie.g.dart';
+
+
+run cmd for generate file
+ flutter pub run build_runner build
+
+ https://github.com/trevorwang/retrofit.dart
