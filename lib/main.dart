@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:moviedb/repository/movie_db_repository.dart';
-import 'package:moviedb/ui/discover_screen.dart';
+import 'package:moviedb/ui/discover/discover_screen.dart';
 //import 'package:flutter_flipperkit/flipper_client.dart';
 //import 'package:flutter_flipperkit/plugins/network/flipper_network_plugin.dart';
 
@@ -78,9 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
 
 
-      MovieDbRepository repo = MovieDbRepository();
-      var moviesResponse = await repo.discover();
-      logger.i(moviesResponse);
+//      MovieDbRepository repo = MovieDbRepository();
+//      var moviesResponse = await repo.discover();
+//      logger.i(moviesResponse);
 
 //      repo.discover().then((it) {
 //        logger.i(it);

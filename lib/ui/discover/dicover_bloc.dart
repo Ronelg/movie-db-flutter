@@ -1,17 +1,21 @@
 
 import 'package:moviedb/model/movies_response.dart';
-import 'package:moviedb/repository/movie_db_repository.dart';
+import 'package:moviedb/ui/injection.dart';
 import 'package:rxdart/rxdart.dart';
 
 
 class DiscoverBloc {
-  final _repository = MovieDbRepository();
+  final _repository = Injector.provideMovieRepository();
   final _moviesFetcher = PublishSubject<MoviesResponse>();
 
   Stream<MoviesResponse> get allMovies => _moviesFetcher.stream;
 
   fetchAllMovies() async {
-    var response = await _repository.discover();
+    Map<String, String> options = Map<String, String>();
+//    options['sort_by']=  "popularity.desc";
+//    options['primary_release_year']=  "2018";
+
+    var response = await _repository.discover(options);
     _moviesFetcher.sink.add(response);
   }
 
@@ -20,4 +24,4 @@ class DiscoverBloc {
   }
 }
 
-final bloc = DiscoverBloc();
+//final bloc = DiscoverBloc();

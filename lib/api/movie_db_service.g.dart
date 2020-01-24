@@ -17,12 +17,14 @@ class _MovieDbService implements MovieDbService {
   String baseUrl;
 
   @override
-  discover() async {
+  discover(options) async {
+    ArgumentError.checkNotNull(options, 'options');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(options ?? <String, dynamic>{});
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/discover/movie?sort_by=popularity.desc',
+        '/discover/movie',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',

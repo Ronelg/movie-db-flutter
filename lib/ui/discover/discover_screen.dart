@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moviedb/model/movies_response.dart';
+import 'package:moviedb/ui/discover/disocver_bloc_provider.dart';
 
 import 'dicover_bloc.dart';
 
 class DiscoverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+//    DiscoverBloc discoverBloc = DiscoverBlocProvider.of(context);
+    DiscoverBloc bloc = DiscoverBloc();
     bloc.fetchAllMovies();
 
     return Scaffold(

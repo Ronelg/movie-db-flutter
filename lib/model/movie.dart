@@ -4,7 +4,7 @@
 
 //@JsonSerializable()
 class Movie {
-  double popularity;
+  num popularity;
   int voteCount;
   bool video;
   String posterPath;

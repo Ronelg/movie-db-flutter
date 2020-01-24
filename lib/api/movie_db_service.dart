@@ -7,7 +7,6 @@ part 'movie_db_service.g.dart';
 
 @RestApi(baseUrl: "https://api.themoviedb.org/4")
 abstract class MovieDbService {
-
   static final MovieDbService instance = _createService();
 
   factory MovieDbService(Dio dio, {String baseUrl}) = _MovieDbService;
@@ -20,6 +19,6 @@ abstract class MovieDbService {
     return MovieDbService(dio);
   }
 
-  @GET('/discover/movie?sort_by=popularity.desc')
-  Future<MoviesResponse> discover();
+  @GET('/discover/movie')
+  Future<MoviesResponse> discover(@Queries() Map<String, String> options);
 }

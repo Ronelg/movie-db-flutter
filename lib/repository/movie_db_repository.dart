@@ -4,11 +4,9 @@ import 'package:moviedb/model/movies_response.dart';
 class MovieDbRepository {
   MovieDbService service;
 
-  MovieDbRepository() {
-    this.service = MovieDbService.instance;
-  }
+  MovieDbRepository({this.service});
 
-  Future<MoviesResponse> discover() {
-    return this.service.discover();
+  Future<MoviesResponse> discover(Map<String, String> options) {
+    return this.service.discover(options);
   }
 }
