@@ -12,7 +12,7 @@ class DiscoverBlocProvider extends InheritedWidget {
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
-    return null;
+    return true;
   }
 
   static DiscoverBloc of(BuildContext context) {

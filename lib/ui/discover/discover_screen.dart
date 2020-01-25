@@ -5,19 +5,43 @@ import 'package:moviedb/ui/discover/disocver_bloc_provider.dart';
 
 import 'dicover_bloc.dart';
 
-class DiscoverScreen extends StatelessWidget {
+class DiscoverScreen extends StatefulWidget {
+  @override
+  _DiscoverScreenState createState() => _DiscoverScreenState();
+}
+
+class _DiscoverScreenState extends State<DiscoverScreen> {
+  DiscoverBloc discoverBloc;
+
+//  @override
+//  void initState() {
+//    super.initState();
+//    discoverBloc = DiscoverBlocProvider.of(context);
+//    discoverBloc.fetchAllMovies();
+//  }
+
+  @override
+  void didChangeDependencies() {
+    discoverBloc = DiscoverBlocProvider.of(context);
+//    discoverBloc = DiscoverBloc();
+    discoverBloc.fetchAllMovies();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    discoverBloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-//    DiscoverBloc discoverBloc = DiscoverBlocProvider.of(context);
-    DiscoverBloc bloc = DiscoverBloc();
-    bloc.fetchAllMovies();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Popular Movies'),
       ),
       body: StreamBuilder(
-        stream: bloc.allMovies,
+        stream: discoverBloc.allMovies,
         builder: (context, AsyncSnapshot<MoviesResponse> snapshot) {
           if (snapshot.hasData) {
             return buildList(snapshot);
