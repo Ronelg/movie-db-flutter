@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:moviedb/repository/movie_db_repository.dart';
 import 'package:moviedb/ui/discover/discover_screen.dart';
+import 'package:moviedb/ui/discover/disocver_bloc_provider.dart';
 //import 'package:flutter_flipperkit/flipper_client.dart';
 //import 'package:flutter_flipperkit/plugins/network/flipper_network_plugin.dart';
 
@@ -41,7 +42,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
 //      home: MyHomePage(title: 'Flutter Demo Home Page'),
-      home: DiscoverScreen(),
+      home: DiscoverBlocProvider(
+        child: DiscoverScreen(),
+      ),
     );
   }
 }
