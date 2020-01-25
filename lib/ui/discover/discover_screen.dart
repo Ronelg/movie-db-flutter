@@ -23,7 +23,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   @override
   void didChangeDependencies() {
     discoverBloc = DiscoverBlocProvider.of(context);
-//    discoverBloc = DiscoverBloc();
     discoverBloc.fetchAllMovies();
     super.didChangeDependencies();
   }
