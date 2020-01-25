@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:moviedb/model/movies_response.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviedb/model/movie.dart';
+import 'package:moviedb/ui/discover/discover_state.dart';
 import 'package:moviedb/ui/discover/disocver_bloc_provider.dart';
 
 import 'dicover_bloc.dart';
+
 
 class DiscoverScreen extends StatefulWidget {
   @override
@@ -13,18 +16,17 @@ class DiscoverScreen extends StatefulWidget {
 class _DiscoverScreenState extends State<DiscoverScreen> {
   DiscoverBloc discoverBloc;
 
-//  @override
-//  void initState() {
-//    super.initState();
-//    discoverBloc = DiscoverBlocProvider.of(context);
-//    discoverBloc.fetchAllMovies();
-//  }
 
   @override
   void didChangeDependencies() {
     discoverBloc = DiscoverBlocProvider.of(context);
-    discoverBloc.fetchAllMovies();
     super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    discoverBloc = BlocProvider.of<DiscoverBloc>(context);
   }
 
   @override
@@ -39,13 +41,12 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
       appBar: AppBar(
         title: Text('Popular Movies'),
       ),
-      body: StreamBuilder(
-        stream: discoverBloc.allMovies,
-        builder: (context, AsyncSnapshot<MoviesResponse> snapshot) {
-          if (snapshot.hasData) {
-            return buildList(snapshot);
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
+      body: BlocBuilder<DiscoverBloc, DiscoverState>(
+        builder: (context, state) {
+          if (state is DiscoverLoaded) {
+            return buildList(state.movies);
+          } else if (state is DiscoverError) {
+            return Text("Error");
           }
           return Center(child: CircularProgressIndicator());
         },
@@ -53,13 +54,13 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     );
   }
 
-  Widget buildList(AsyncSnapshot<MoviesResponse> snapshot) {
+  Widget buildList(List<Movie> snapshot) {
     return GridView.builder(
-        itemCount: snapshot.data.results.length,
+        itemCount: snapshot.length,
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (BuildContext context, int index) {
           return Image.network(
-            'https://image.tmdb.org/t/p/w185${snapshot.data.results[index].posterPath}',
+            'https://image.tmdb.org/t/p/w185${snapshot[index].posterPath}',
             fit: BoxFit.cover,
           );
         });

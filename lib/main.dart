@@ -1,4 +1,5 @@
 
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:moviedb/repository/movie_db_repository.dart';
 import 'package:moviedb/ui/discover/discover_screen.dart';
@@ -10,6 +11,8 @@ import 'api/movie_db_service.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:logger/logger.dart';
 
+import 'ui/bloc/simple_bloc_delegate.dart';
+
 
 void main() {
 //  FlipperClient flipperClient = FlipperClient.getDefault();
@@ -20,6 +23,7 @@ void main() {
 //  ));
 //  flipperClient.start();
 
+  BlocSupervisor.delegate = SimpleBlocDelegate();
   runApp(MyApp());
 }
 
