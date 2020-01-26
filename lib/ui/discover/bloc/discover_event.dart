@@ -9,13 +9,12 @@ abstract class DiscoverEvent extends Equatable {
 }
 
 class DiscoverFetch extends DiscoverEvent {
-  final int page;
 
-  const DiscoverFetch({@required this.page});
-
-  @override
-  List<Object> get props => [page];
+  const DiscoverFetch();
 
   @override
-  String toString() => 'Discover Fetch { page: $page }';
+  List<Object> get props => [];
+
+  @override
+  String toString() => 'Discover Fetch';
 }

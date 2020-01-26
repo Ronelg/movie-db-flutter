@@ -23,7 +23,17 @@ class DiscoverLoaded extends DiscoverState {
   List<Object> get props => [movies, page];
 
   @override
-  String toString() => 'Discover Loaded { items: ${movies.length} }';
+  String toString() => 'Discover Loaded { items: ${movies.length} page: $page }';
 }
 
-class DiscoverError extends DiscoverState {}
+class DiscoverError extends DiscoverState {
+  final String message;
+
+  const DiscoverError({@required this.message});
+
+  @override
+  List<Object> get props => [message];
+
+  @override
+  String toString() => 'Discover Error { message: $message }';
+}

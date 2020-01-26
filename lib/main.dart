@@ -2,8 +2,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moviedb/ui/discover/dicover_bloc.dart';
-import 'package:moviedb/ui/discover/discover_event.dart';
+import 'package:moviedb/ui/discover/bloc/dicover_bloc.dart';
+import 'package:moviedb/ui/discover/bloc/discover_event.dart';
 import 'package:moviedb/ui/discover/discover_screen.dart';
 //import 'package:flutter_flipperkit/flipper_client.dart';
 //import 'package:flutter_flipperkit/plugins/network/flipper_network_plugin.dart';
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
       ),
 //      home: MyHomePage(title: 'Flutter Demo Home Page'),
       home: BlocProvider<DiscoverBloc>(
-        create: (context) => DiscoverBloc()..add(DiscoverFetch(page: 1)),
+        create: (context) => DiscoverBloc()..add(DiscoverFetch()),
         child: DiscoverScreen(),
       ),
     );
