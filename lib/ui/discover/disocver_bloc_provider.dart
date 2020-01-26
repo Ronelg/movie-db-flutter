@@ -16,7 +16,7 @@ class DiscoverBlocProvider extends InheritedWidget {
   }
 
   static DiscoverBloc of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(DiscoverBlocProvider) as DiscoverBlocProvider)
+    return (context.dependOnInheritedWidgetOfExactType<DiscoverBlocProvider>())
         .bloc;
   }
 }

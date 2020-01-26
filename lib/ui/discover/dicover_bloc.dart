@@ -6,22 +6,22 @@ import 'package:rxdart/rxdart.dart';
 
 class DiscoverBloc {
   final _repository = Injector.provideMovieRepository();
-  final _moviesFetcher = PublishSubject<MoviesResponse>();
+  final _moviesSubject = PublishSubject<MoviesResponse>();
 
-  Stream<MoviesResponse> get allMovies => _moviesFetcher.stream;
+  Stream<MoviesResponse> get allMovies => _moviesSubject.stream;
 
-  fetchAllMovies() async {
+  fetchMovies() async {
     Map<String, String> options = Map<String, String>();
 //    options['sort_by']=  "popularity.desc";
 //    options['primary_release_year']=  "2018";
+//    options['page']=  "1";
 
     var response = await _repository.discover(options);
-    _moviesFetcher.sink.add(response);
+    _moviesSubject.sink.add(response);
   }
 
   dispose() {
-    _moviesFetcher.close();
+    _moviesSubject.close();
   }
-}
 
-//final bloc = DiscoverBloc();
+}
