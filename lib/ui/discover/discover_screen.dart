@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moviedb/model/movie.dart';
 import 'package:moviedb/ui/discover/discover_state.dart';
-import 'package:moviedb/ui/discover/disocver_bloc_provider.dart';
 
 import 'dicover_bloc.dart';
 
@@ -16,27 +15,10 @@ class DiscoverScreen extends StatefulWidget {
 class _DiscoverScreenState extends State<DiscoverScreen> {
   DiscoverBloc discoverBloc;
 
-
-  @override
-  void didChangeDependencies() {
-    discoverBloc = DiscoverBlocProvider.of(context);
-    super.didChangeDependencies();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    discoverBloc = BlocProvider.of<DiscoverBloc>(context);
-  }
-
-  @override
-  void dispose() {
-    discoverBloc.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
+    discoverBloc = BlocProvider.of<DiscoverBloc>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Popular Movies'),

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:moviedb/model/movies_response.dart';
 import 'package:moviedb/ui/injection.dart';
 import 'package:rxdart/rxdart.dart';
@@ -11,6 +12,7 @@ import 'discover_state.dart';
 class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
   final _repository = Injector.provideMovieRepository();
   final _moviesFetcher = PublishSubject<MoviesResponse>();
+  final logger = Logger();
 
   Stream<MoviesResponse> get allMovies => _moviesFetcher.stream;
 
@@ -24,15 +26,16 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
     if (event is DiscoverFetch) {
       try {
         if (currentState is DiscoverUninitialized) {
-          final MoviesResponse response = _fetchMovies1(0);
+          final MoviesResponse response = await _fetchMovies1(1);
           yield DiscoverLoaded(movies: response.results, page: response.page);
         }
 
         if (currentState is DiscoverLoaded) {
-          final response = await _fetchMovies1(currentState.page + 1);
+          final MoviesResponse response = await _fetchMovies1(currentState.page + 1);
           yield DiscoverLoaded(movies: response.results, page: response.page);
         }
       } catch (err) {
+        logger.i(err);
         yield DiscoverError();
       }
     }

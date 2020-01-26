@@ -20,7 +20,7 @@ class DiscoverLoaded extends DiscoverState {
   const DiscoverLoaded({@required this.movies, @required this.page});
 
   @override
-  List<Object> get props => [movies];
+  List<Object> get props => [movies, page];
 
   @override
   String toString() => 'Discover Loaded { items: ${movies.length} }';
