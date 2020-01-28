@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moviedb/model/movie.dart';
@@ -45,16 +44,24 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   }
 
   Widget _buildList(List<Movie> snapshot) {
-    return GridView.builder(
-      itemCount: snapshot.length,
-      gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-      itemBuilder: (BuildContext context, int index) {
-        return Image.network(
-          'https://image.tmdb.org/t/p/w185${snapshot[index].posterPath}',
-          fit: BoxFit.cover,
-        );
-      },
-      controller: _scrollController,
+    return Container(
+      color: Colors.black87,
+      child: GridView.builder(
+        itemCount: snapshot.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+          childAspectRatio: 1/ 1.6,
+        ),
+        itemBuilder: (BuildContext context, int index) {
+          return Image.network(
+            'https://image.tmdb.org/t/p/w185${snapshot[index].posterPath}',
+            fit: BoxFit.cover,
+          );
+        },
+        controller: _scrollController,
+      ),
     );
   }
 
@@ -65,8 +72,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
 
     if (offset >= maxScrollExtent && !outOfRange) {
 //      setState(() {
-        //reach the bottom
-        _discoverBloc.add(DiscoverFetch());
+      //reach the bottom
+      _discoverBloc.add(DiscoverFetch());
 //      });
     }
   }

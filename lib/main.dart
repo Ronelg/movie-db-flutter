@@ -1,10 +1,12 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moviedb/ui/discover/bloc/dicover_bloc.dart';
 import 'package:moviedb/ui/discover/bloc/discover_event.dart';
 import 'package:moviedb/ui/discover/discover_screen.dart';
+import 'package:moviedb/ui/home/bloc/home_bloc_provider.dart';
+import 'package:moviedb/ui/home/home_screen.dart';
+
 //import 'package:flutter_flipperkit/flipper_client.dart';
 //import 'package:flutter_flipperkit/plugins/network/flipper_network_plugin.dart';
 
@@ -13,7 +15,6 @@ import 'package:dio/dio.dart' hide Headers;
 import 'package:logger/logger.dart';
 
 import 'ui/bloc/simple_bloc_delegate.dart';
-
 
 void main() {
 //  FlipperClient flipperClient = FlipperClient.getDefault();
@@ -44,12 +45,15 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
 //      home: MyHomePage(title: 'Flutter Demo Home Page'),
       home: BlocProvider<DiscoverBloc>(
         create: (context) => DiscoverBloc()..add(DiscoverFetch()),
-        child: DiscoverScreen(),
+        child: HomeBlocProvider(
+          child: HomeScreen(),
+        ),
+//        child: DiscoverScreen(),
       ),
     );
   }

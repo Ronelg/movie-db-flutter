@@ -5,7 +5,7 @@ import 'package:dio/dio.dart' hide Headers;
 
 part 'movie_db_service.g.dart';
 
-@RestApi(baseUrl: "https://api.themoviedb.org/4")
+@RestApi(baseUrl: "https://api.themoviedb.org/3")
 abstract class MovieDbService {
   static final MovieDbService instance = _createService();
 
@@ -21,4 +21,16 @@ abstract class MovieDbService {
 
   @GET('/discover/movie')
   Future<MoviesResponse> discover(@Queries() Map<String, String> options);
+
+  @GET('/movie/now_playing')
+  Future<MoviesResponse> nowPlaying(@Queries() Map<String, String> options);
+
+  @GET('/movie/popular')
+  Future<MoviesResponse> popularMovies(@Queries() Map<String, String> options);
+
+  @GET('/movie/top_rated')
+  Future<MoviesResponse> topRatedMovies(@Queries() Map<String, String> options);
+
+  @GET('/movie/upcoming')
+  Future<MoviesResponse> upcomingMovies(@Queries() Map<String, String> options);
 }

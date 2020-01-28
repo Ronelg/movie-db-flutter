@@ -22,12 +22,12 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
     if (event is DiscoverFetch) {
       try {
         if (currentState is DiscoverUninitialized) {
-          final MoviesResponse response = await _fetchMovies1(1);
+          final MoviesResponse response = await _fetchMovies(1);
           yield DiscoverLoaded(movies: response.results, page: response.page);
         }
 
         if (currentState is DiscoverLoaded) {
-          final MoviesResponse response = await _fetchMovies1(currentState.page + 1);
+          final MoviesResponse response = await _fetchMovies(currentState.page + 1);
           yield DiscoverLoaded(movies: currentState.movies + response.results, page: response.page);
         }
       } catch (err) {
@@ -37,7 +37,7 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
     }
   }
 
-  _fetchMovies1(int page) async {
+  _fetchMovies(int page) async {
     Map<String, String> options = Map<String, String>();
     options['sort_by'] = "popularity.desc";
 //    options['primary_release_year']=  "2018";
