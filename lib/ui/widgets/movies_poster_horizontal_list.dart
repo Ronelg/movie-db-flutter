@@ -13,7 +13,7 @@ class MoviesPosterHorizontalList extends StatelessWidget {
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
     final double height = MediaQuery.of(context).size.height;
-    final double cellHeight = orientation == Orientation.portrait ? height * 0.33 : height * 0.5;
+    final double cellHeight = orientation == Orientation.portrait ? height * 0.33 : height * 0.55;
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8.0),
@@ -42,7 +42,7 @@ class MoviesPosterHorizontalList extends StatelessWidget {
 ListView _createList(BuildContext context, List<Movie> movies) {
   final Orientation orientation = MediaQuery.of(context).orientation;
   final double width = MediaQuery.of(context).size.width;
-  final double cellWidth = orientation == Orientation.portrait ? width * 0.75 : width * 0.55;
+  final double cellWidth = orientation == Orientation.portrait ? width * 0.75 : width * 0.45;
 
   return ListView.builder(
       scrollDirection: Axis.horizontal,
