@@ -18,7 +18,6 @@ class HomeBloc {
   Stream<List<Movie>> get upcomingMovies => _upcomingMoviesSubject.stream;
 
   load() async {
-    logger.i("Load!!");
     await _popularMovies();
     await _topRatedMovies();
     await _nowPlayingMovies();
@@ -34,7 +33,6 @@ class HomeBloc {
 
   _popularMovies() async {
     Map<String, String> options = Map<String, String>();
-//    options['sort_by'] = "popularity.desc";
     options['page'] = "1";
 
     MoviesResponse response = await _repository.popularMovies(options);
@@ -44,7 +42,6 @@ class HomeBloc {
 
   _topRatedMovies() async {
     Map<String, String> options = Map<String, String>();
-//    options['sort_by'] = "vote_count.desc";
     options['page'] = "1";
 
     MoviesResponse response = await _repository.topRatedMovies(options);

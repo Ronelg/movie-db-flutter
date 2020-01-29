@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:moviedb/model/movie.dart';
 import 'package:moviedb/ui/home/bloc/home_bloc.dart';
-import 'package:moviedb/ui/home/bloc/home_bloc_provider.dart';
 import 'package:moviedb/ui/widgets/movies_horizontal_list.dart';
 import 'package:moviedb/ui/widgets/movies_poster_horizontal_list.dart';
 
@@ -29,28 +28,28 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
 //    _bloc.load();
     return Scaffold(
-        appBar: AppBar(
-          title: Text('TMDB'),
-        ),
-        body: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints viewportConstraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: viewportConstraints.maxHeight,
-                ),
-                child: Column(
-                  children: [
-                    _buildNowPlayingList(context, "Movies Now Playing"),
-                    _buildPopularList(context, "Popular Movies"),
-                    _buildTopRatedList(context, "Movies Top Rated"),
-                    _buildupcomingList(context, "Movies Upcoming"),
-                  ],
-                ),
+      appBar: AppBar(
+        title: Text('TMDB'),
+      ),
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints viewportConstraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: viewportConstraints.maxHeight,
               ),
-            );
-          },
-        ),
+              child: Column(
+                children: [
+                  _buildNowPlayingList(context, "Movies Now Playing"),
+                  _buildPopularList(context, "Popular Movies"),
+                  _buildTopRatedList(context, "Movies Top Rated"),
+                  _buildUpcomingList(context, "Movies Upcoming"),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
       backgroundColor: Colors.blueGrey[900],
     );
   }
@@ -64,7 +63,7 @@ Widget _buildPopularList(BuildContext context, String title) {
         if (snapshot.hasData) {
           return MoviesHorizontalList(title, snapshot.data);
         } else {
-          return Container(); //Center(child: CircularProgressIndicator());
+          return Container();
         }
       },
     ),
@@ -79,14 +78,14 @@ Widget _buildTopRatedList(BuildContext context, String title) {
         if (snapshot.hasData) {
           return MoviesHorizontalList(title, snapshot.data);
         } else {
-          return Container(); //Center(child: CircularProgressIndicator());
+          return Container();
         }
       },
     ),
   );
 }
 
-Widget _buildupcomingList(BuildContext context, String title) {
+Widget _buildUpcomingList(BuildContext context, String title) {
   return Container(
     child: StreamBuilder(
       stream: homeBloc.upcomingMovies,
@@ -94,7 +93,7 @@ Widget _buildupcomingList(BuildContext context, String title) {
         if (snapshot.hasData) {
           return MoviesHorizontalList(title, snapshot.data);
         } else {
-          return Container(); //Center(child: CircularProgressIndicator());
+          return Container();
         }
       },
     ),
@@ -109,7 +108,7 @@ Widget _buildNowPlayingList(BuildContext context, String title) {
         if (snapshot.hasData) {
           return MoviesPosterHorizontalList(title, snapshot.data);
         } else {
-          return Container(); //Center(child: CircularProgressIndicator());
+          return Container();
         }
       },
     ),

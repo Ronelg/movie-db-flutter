@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:moviedb/model/movie.dart';
+import 'package:moviedb/ui/movieslist/movies_list_screen.dart';
 
 class MoviesHorizontalList extends StatelessWidget {
   final String _title;
@@ -26,7 +27,7 @@ class MoviesHorizontalList extends StatelessWidget {
               children: <Widget>[
                 _titleWidget(context, _title),
                 Spacer(),
-                _moreWidget(),
+                _moreWidget(context),
               ],
             ),
           ),
@@ -53,12 +54,11 @@ ListView _createList(BuildContext context, List<Movie> movies) {
           child: Column(
             children: <Widget>[
               Container(
-//              width: cellWidth,
                 child: Expanded(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.network(
-                      'https://image.tmdb.org/t/p/w185${movies[index].posterPath}',
+                      'https://image.tmdb.org/t/p/w300${movies[index].posterPath}',
                       fit: BoxFit.cover,
                       width: cellWidth,
                     ),
@@ -93,13 +93,21 @@ Widget _titleWidget(BuildContext context, String title) {
   );
 }
 
-Widget _moreWidget() {
-  return Text(
-    "More",
-    style: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.normal,
-      color: Colors.green,
+Widget _moreWidget(BuildContext context) {
+  return FlatButton(
+    child: Text(
+      "More",
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.normal,
+        color: Colors.green,
+      ),
+    ),
+    onPressed: () => Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MoviesListScreen(),
+      ),
     ),
   );
 }
