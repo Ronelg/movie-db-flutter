@@ -1,13 +1,16 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:moviedb/model/collection_type.dart';
 import 'package:moviedb/model/movie.dart';
+import 'package:moviedb/ui/movieslist/movies_list_screen.dart';
 
 class MoviesPosterHorizontalList extends StatelessWidget {
   final String _title;
   final List<Movie> _movies;
+  final CollectionType collectionType;
 
-  MoviesPosterHorizontalList(this._title, this._movies);
+  MoviesPosterHorizontalList(this._title, this._movies, this.collectionType);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class MoviesPosterHorizontalList extends StatelessWidget {
               children: <Widget>[
                 _titleWidget(context, _title),
                 Spacer(),
-                _moreWidget(),
+                _moreWidget(context),
               ],
             ),
           ),
@@ -37,69 +40,77 @@ class MoviesPosterHorizontalList extends StatelessWidget {
       ),
     );
   }
-}
 
-ListView _createList(BuildContext context, List<Movie> movies) {
-  final Orientation orientation = MediaQuery.of(context).orientation;
-  final double width = MediaQuery.of(context).size.width;
-  final double cellWidth = orientation == Orientation.portrait ? width * 0.85 : width * 0.45;
+  ListView _createList(BuildContext context, List<Movie> movies) {
+    final Orientation orientation = MediaQuery.of(context).orientation;
+    final double width = MediaQuery.of(context).size.width;
+    final double cellWidth = orientation == Orientation.portrait ? width * 0.85 : width * 0.45;
 
-  return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: movies.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: Column(
-            children: <Widget>[
-              Container(
+    return ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: movies.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Column(
+              children: <Widget>[
+                Container(
 //              width: cellWidth,
-                child: Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(
-                      'https://image.tmdb.org/t/p/w500${movies[index].posterPath}',
-                      fit: BoxFit.cover,
-                      width: cellWidth,
+                  child: Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Image.network(
+                        'https://image.tmdb.org/t/p/w500${movies[index].posterPath}',
+                        fit: BoxFit.cover,
+                        width: cellWidth,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: cellWidth,
-                child: Text(
-                  movies[index].title,
-                  textAlign: TextAlign.start,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: Colors.white,
+                Container(
+                  width: cellWidth,
+                  child: Text(
+                    movies[index].title,
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        );
-      });
-}
+              ],
+            ),
+          );
+        });
+  }
 
-Widget _titleWidget(BuildContext context, String title) {
-  return Text(
-    title,
-    style: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.normal,
-      color: Colors.white,
-    ),
-  );
-}
+  Widget _titleWidget(BuildContext context, String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.normal,
+        color: Colors.white,
+      ),
+    );
+  }
 
-Widget _moreWidget() {
-  return Text(
-    "More",
-    style: TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.normal,
-      color: Colors.green,
-    ),
-  );
+  Widget _moreWidget(BuildContext context) {
+    return FlatButton(
+      child: Text(
+        "More",
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.normal,
+          color: Colors.green,
+        ),
+      ),
+      onPressed: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MoviesListScreen(collectionType),
+        ),
+      ),
+    );
+  }
 }

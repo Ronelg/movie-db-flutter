@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:moviedb/model/collection_type.dart';
 import 'package:moviedb/model/movie.dart';
 import 'package:moviedb/ui/home/bloc/home_bloc.dart';
 import 'package:moviedb/ui/widgets/movies_horizontal_list.dart';
@@ -61,7 +62,7 @@ Widget _buildPopularList(BuildContext context, String title) {
       stream: homeBloc.popularMovies,
       builder: (context, AsyncSnapshot<List<Movie>> snapshot) {
         if (snapshot.hasData) {
-          return MoviesHorizontalList(title, snapshot.data);
+          return MoviesHorizontalList(title, snapshot.data, CollectionType.PopularMovies);
         } else {
           return Container();
         }
@@ -76,7 +77,7 @@ Widget _buildTopRatedList(BuildContext context, String title) {
       stream: homeBloc.topRatedMovies,
       builder: (context, AsyncSnapshot<List<Movie>> snapshot) {
         if (snapshot.hasData) {
-          return MoviesHorizontalList(title, snapshot.data);
+          return MoviesHorizontalList(title, snapshot.data, CollectionType.TopRatedMovies);
         } else {
           return Container();
         }
@@ -91,7 +92,7 @@ Widget _buildUpcomingList(BuildContext context, String title) {
       stream: homeBloc.upcomingMovies,
       builder: (context, AsyncSnapshot<List<Movie>> snapshot) {
         if (snapshot.hasData) {
-          return MoviesHorizontalList(title, snapshot.data);
+          return MoviesHorizontalList(title, snapshot.data, CollectionType.UpcomingMovies);
         } else {
           return Container();
         }
@@ -106,7 +107,7 @@ Widget _buildNowPlayingList(BuildContext context, String title) {
       stream: homeBloc.nowPlayingMovies,
       builder: (context, AsyncSnapshot<List<Movie>> snapshot) {
         if (snapshot.hasData) {
-          return MoviesPosterHorizontalList(title, snapshot.data);
+          return MoviesPosterHorizontalList(title, snapshot.data, CollectionType.NowPlayingMovies);
         } else {
           return Container();
         }

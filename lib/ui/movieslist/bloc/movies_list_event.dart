@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:moviedb/model/collection_type.dart';
 
 abstract class MoviesListEvent extends Equatable {
   const MoviesListEvent();
@@ -8,11 +9,23 @@ abstract class MoviesListEvent extends Equatable {
 }
 
 class MoviesListFetch extends MoviesListEvent {
-  const MoviesListFetch();
+  final CollectionType collectionType;
+
+  const MoviesListFetch(this.collectionType);
+
+  @override
+  List<Object> get props => [collectionType];
+
+  @override
+  String toString() => 'MoviesList Fetch { collectionType: $collectionType }';
+}
+
+class ClearState extends MoviesListEvent {
+  const ClearState();
 
   @override
   List<Object> get props => [];
 
   @override
-  String toString() => 'Discover Fetch';
+  String toString() => 'MoviesList Clear';
 }

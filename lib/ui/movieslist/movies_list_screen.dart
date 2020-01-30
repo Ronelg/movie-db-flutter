@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moviedb/model/collection_type.dart';
 import 'package:moviedb/model/movie.dart';
 import 'package:moviedb/ui/movieslist/bloc/movies_list_event.dart';
 import 'package:moviedb/ui/movieslist/bloc/movies_list_state.dart';
@@ -7,6 +8,10 @@ import 'package:moviedb/ui/movieslist/bloc/movies_list_state.dart';
 import 'bloc/movies_list_bloc.dart';
 
 class MoviesListScreen extends StatefulWidget {
+  final CollectionType collectionType;
+
+  MoviesListScreen(this.collectionType);
+
   @override
   _MoviesListScreenState createState() => _MoviesListScreenState();
 }
@@ -19,7 +24,9 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
   void initState() {
     _scrollController.addListener(_onScroll);
     _bloc = BlocProvider.of<MoviesListBloc>(context);
-    _bloc.add(MoviesListFetch());
+
+    _bloc.add(ClearState());
+    _bloc.add(MoviesListFetch(widget.collectionType));
     super.initState();
   }
 
@@ -27,8 +34,9 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Popular Movies'),
+        title: _title(),
       ),
+      backgroundColor: Colors.black87,
       body: BlocBuilder<MoviesListBloc, MoviesListState>(
         builder: (context, state) {
           if (state is MoviesListLoaded) {
@@ -46,7 +54,6 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
 
   Widget _buildList(List<Movie> snapshot) {
     return Container(
-      color: Colors.black87,
       child: GridView.builder(
         itemCount: snapshot.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -74,8 +81,22 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
     if (offset >= maxScrollExtent && !outOfRange) {
 //      setState(() {
       //reach the bottom
-      _bloc.add(MoviesListFetch());
+      _bloc.add(MoviesListFetch(widget.collectionType));
 //      });
+    }
+  }
+
+  Widget _title() {
+    if (widget.collectionType == CollectionType.NowPlayingMovies) {
+      return Text("Movies Now Playing");
+    } else if (widget.collectionType == CollectionType.PopularMovies) {
+      return Text("Popoular Movies");
+    } else if (widget.collectionType == CollectionType.TopRatedMovies) {
+      return Text("Top Rated Movies");
+    } else if (widget.collectionType == CollectionType.UpcomingMovies) {
+      return Text("Upcoming Movies");
+    } else {
+      return Text("");
     }
   }
 }
