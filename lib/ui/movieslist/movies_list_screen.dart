@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:moviedb/model/collection_type.dart';
 import 'package:moviedb/model/movie.dart';
 import 'package:moviedb/ui/movieslist/bloc/movies_list_event.dart';
@@ -19,6 +20,7 @@ class MoviesListScreen extends StatefulWidget {
 class _MoviesListScreenState extends State<MoviesListScreen> {
   final _scrollController = ScrollController();
   MoviesListBloc _bloc;
+  Logger logger = Logger();
 
   @override
   void initState() {
@@ -53,11 +55,19 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
   }
 
   Widget _buildList(List<Movie> snapshot) {
+    final Orientation orientation = MediaQuery.of(context).orientation;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
+    final double columnsCount = orientation == Orientation.portrait
+        ? screenWidth / (screenWidth * 0.3)
+        : screenHeight / (screenHeight * 0.25);
+
     return Container(
       child: GridView.builder(
         itemCount: snapshot.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: columnsCount.toInt(),
           crossAxisSpacing: 8,
           mainAxisSpacing: 8,
           childAspectRatio: 1 / 1.6,

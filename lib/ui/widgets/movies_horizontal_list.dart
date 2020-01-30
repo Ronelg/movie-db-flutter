@@ -75,9 +75,7 @@ class MoviesHorizontalList extends StatelessWidget {
                     movies[index].title,
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                    style: Theme.of(context).accentTextTheme.subtitle,
                   ),
                 ),
               ],
@@ -89,11 +87,7 @@ class MoviesHorizontalList extends StatelessWidget {
   Widget _titleWidget(BuildContext context, String title) {
     return Text(
       title,
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.normal,
-        color: Colors.white,
-      ),
+      style: Theme.of(context).accentTextTheme.title,
     );
   }
 
@@ -101,11 +95,9 @@ class MoviesHorizontalList extends StatelessWidget {
     return FlatButton(
       child: Text(
         "More",
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.normal,
-          color: Colors.green,
-        ),
+        style: Theme.of(context).accentTextTheme.title.copyWith(
+              color: Colors.green,
+            ),
       ),
       onPressed: () => Navigator.push(
         context,
