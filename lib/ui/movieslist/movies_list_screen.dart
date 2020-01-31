@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
 import 'package:moviedb/model/collection_type.dart';
 import 'package:moviedb/model/movie.dart';
+import 'package:moviedb/ui/mobiedetails/movie_details_screen.dart';
 import 'package:moviedb/ui/movieslist/bloc/movies_list_event.dart';
 import 'package:moviedb/ui/movieslist/bloc/movies_list_state.dart';
 
@@ -73,9 +74,17 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
           childAspectRatio: 1 / 1.6,
         ),
         itemBuilder: (BuildContext context, int index) {
-          return Image.network(
-            'https://image.tmdb.org/t/p/w185${snapshot[index].posterPath}',
-            fit: BoxFit.cover,
+          return GestureDetector(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MovieDetailsScreen(snapshot[index]),
+              ),
+            ),
+            child: Image.network(
+              'https://image.tmdb.org/t/p/w185${snapshot[index].posterPath}',
+              fit: BoxFit.cover,
+            ),
           );
         },
         controller: _scrollController,

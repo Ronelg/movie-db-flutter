@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:moviedb/model/collection_type.dart';
 import 'package:moviedb/model/movie.dart';
+import 'package:moviedb/ui/mobiedetails/movie_details_screen.dart';
 import 'package:moviedb/ui/movieslist/movies_list_screen.dart';
 
 class MoviesHorizontalList extends StatelessWidget {
@@ -61,10 +62,18 @@ class MoviesHorizontalList extends StatelessWidget {
                   child: Expanded(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network(
-                        'https://image.tmdb.org/t/p/w300${movies[index].posterPath}',
-                        fit: BoxFit.cover,
-                        width: cellWidth,
+                      child: GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MovieDetailsScreen(movies[index]),
+                          ),
+                        ),
+                        child: Image.network(
+                          'https://image.tmdb.org/t/p/w300${movies[index].posterPath}',
+                          fit: BoxFit.cover,
+                          width: cellWidth,
+                        ),
                       ),
                     ),
                   ),
