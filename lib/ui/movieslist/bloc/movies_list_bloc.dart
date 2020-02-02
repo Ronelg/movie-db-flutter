@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
-import 'package:moviedb/model/collection_type.dart';
 import 'package:moviedb/model/collection_type.dart';
 import 'package:moviedb/model/movies_response.dart';
 

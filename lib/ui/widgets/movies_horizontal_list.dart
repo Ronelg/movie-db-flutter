@@ -66,7 +66,10 @@ class MoviesHorizontalList extends StatelessWidget {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MovieDetailsScreen(movies[index]),
+                            builder: (context){
+                              final movie = movies[index];
+                              return MovieDetailsScreen(movie);
+                            },
                           ),
                         ),
                         child: Image.network(
