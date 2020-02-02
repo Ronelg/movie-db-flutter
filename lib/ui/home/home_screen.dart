@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moviedb/model/collection_type.dart';
-import 'package:moviedb/model/movie.dart';
-import 'package:moviedb/ui/home/bloc/home_bloc.dart';
+import 'package:moviedb/ui/home/bloc/home_event.dart';
+import 'package:moviedb/ui/home/bloc/home_state.dart';
 import 'package:moviedb/ui/widgets/movies_horizontal_list.dart';
 import 'package:moviedb/ui/widgets/movies_poster_horizontal_list.dart';
+
+import 'bloc/home_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,12 +15,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-//  HomeBloc _bloc;
+  HomeBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    homeBloc.load();
+    _bloc = BlocProvider.of<HomeBloc>(context);
+
+    _bloc..add(HomeFetchNowPlaying());
+    _bloc..add(HomeFetchTopRated());
+    _bloc..add(HomeFetchPopularMovies());
+    _bloc..add(HomeFetchUpcoming());
   }
 
   @override
@@ -27,10 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-//    _bloc.load();
     return Scaffold(
       appBar: AppBar(
-        title: Text('TMDB'),
+        title: Text("TMDB"),
       ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
@@ -57,63 +64,53 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 Widget _buildPopularList(BuildContext context, String title) {
-  return Container(
-    child: StreamBuilder(
-      stream: homeBloc.popularMovies,
-      builder: (context, AsyncSnapshot<List<Movie>> snapshot) {
-        if (snapshot.hasData) {
-          return MoviesHorizontalList(title, snapshot.data, CollectionType.PopularMovies);
-        } else {
-          return Container();
+  return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoaded) {
+          if (state.popularMovies != null) {
+            return MoviesHorizontalList(title, state.popularMovies, CollectionType.PopularMovies);
+          }
         }
-      },
-    ),
+        return Container();
+      }
   );
 }
 
 Widget _buildTopRatedList(BuildContext context, String title) {
-  return Container(
-    child: StreamBuilder(
-      stream: homeBloc.topRatedMovies,
-      builder: (context, AsyncSnapshot<List<Movie>> snapshot) {
-        if (snapshot.hasData) {
-          return MoviesHorizontalList(title, snapshot.data, CollectionType.TopRatedMovies);
-        } else {
-          return Container();
+  return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoaded) {
+          if (state.topRatedMovies != null) {
+            return MoviesHorizontalList(title, state.topRatedMovies, CollectionType.TopRatedMovies);
+          }
         }
-      },
-    ),
+        return Container();
+      }
   );
 }
 
 Widget _buildUpcomingList(BuildContext context, String title) {
-  return Container(
-    child: StreamBuilder(
-      stream: homeBloc.upcomingMovies,
-      builder: (context, AsyncSnapshot<List<Movie>> snapshot) {
-        if (snapshot.hasData) {
-          return MoviesHorizontalList(title, snapshot.data, CollectionType.UpcomingMovies);
-        } else {
-          return Container();
+  return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoaded) {
+          if (state.upcomingMovies != null) {
+            return MoviesHorizontalList(title, state.upcomingMovies, CollectionType.UpcomingMovies);
+          }
         }
-      },
-    ),
+        return Container();
+      }
   );
 }
 
 Widget _buildNowPlayingList(BuildContext context, String title) {
-  return Container(
-    child: StreamBuilder(
-      stream: homeBloc.nowPlayingMovies,
-      builder: (context, AsyncSnapshot<List<Movie>> snapshot) {
-        if (snapshot.hasData) {
-          return MoviesPosterHorizontalList(title, snapshot.data, CollectionType.NowPlayingMovies);
-        } else {
-          return Container();
+  return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        if (state is HomeLoaded) {
+          if (state.nowPlaying != null) {
+            return MoviesPosterHorizontalList(title, state.nowPlaying, CollectionType.NowPlayingMovies);
+          }
         }
-      },
-    ),
+        return Container();
+      }
   );
 }
-
-

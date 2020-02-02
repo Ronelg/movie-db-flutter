@@ -1,34 +1,68 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
-import 'package:moviedb/model/movie.dart';
 import 'package:moviedb/model/movies_response.dart';
-import 'package:moviedb/ui/injection.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:moviedb/ui/home/bloc/home_event.dart';
+import 'package:moviedb/ui/home/bloc/home_state.dart';
 
-class HomeBloc {
+import '../../injection.dart';
+
+class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final _repository = Injector.provideMovieRepository();
-  final _popularMoviesSubject = PublishSubject<List<Movie>>();
-  final _topRatedMoviesSubject = PublishSubject<List<Movie>>();
-  final _nowPlayingMoviesSubject = PublishSubject<List<Movie>>();
-  final _upcomingMoviesSubject = PublishSubject<List<Movie>>();
-  final logger = Logger();
+  final _logger = Logger();
 
-  Stream<List<Movie>> get popularMovies => _popularMoviesSubject.stream;
-  Stream<List<Movie>> get topRatedMovies => _topRatedMoviesSubject.stream;
-  Stream<List<Movie>> get nowPlayingMovies => _nowPlayingMoviesSubject.stream;
-  Stream<List<Movie>> get upcomingMovies => _upcomingMoviesSubject.stream;
+  @override
+  HomeState get initialState => HomeUninitialized();
 
-  load() async {
-    await _popularMovies();
-    await _topRatedMovies();
-    await _nowPlayingMovies();
-    await _upcomingMovies();
-  }
+  @override
+  Stream<HomeState> mapEventToState(HomeEvent event) async* {
+    final currentState = state;
 
-  dispose() {
-    _popularMoviesSubject.close();
-    _topRatedMoviesSubject.close();
-    _nowPlayingMoviesSubject.close();
-    _upcomingMoviesSubject.close();
+    try {
+      if (currentState is HomeUninitialized) {
+        if (event is HomeFetchNowPlaying) {
+          MoviesResponse response = await _nowPlayingMovies();
+          yield HomeLoaded(nowPlaying: response.results);
+        }
+
+        if (event is HomeFetchPopularMovies) {
+          MoviesResponse response = await _popularMovies();
+          yield HomeLoaded(popularMovies: response.results);
+        }
+
+        if (event is HomeFetchTopRated) {
+          MoviesResponse response = await _topRatedMovies();
+          yield HomeLoaded(topRatedMovies: response.results);
+        }
+
+        if (event is HomeFetchUpcoming) {
+          MoviesResponse response = await _upcomingMovies();
+          yield HomeLoaded(upcomingMovies: response.results);
+        }
+      }
+      if (currentState is HomeLoaded) {
+        if (event is HomeFetchNowPlaying) {
+          MoviesResponse response = await _nowPlayingMovies();
+          yield currentState.copyWith(nowPlaying: response.results);
+        }
+
+        if (event is HomeFetchPopularMovies) {
+          MoviesResponse response = await _popularMovies();
+          yield currentState.copyWith(popularMovies: response.results);
+        }
+
+        if (event is HomeFetchTopRated) {
+          MoviesResponse response = await _topRatedMovies();
+          yield currentState.copyWith(topRatedMovies: response.results);
+        }
+
+        if (event is HomeFetchUpcoming) {
+          MoviesResponse response = await _upcomingMovies();
+          yield currentState.copyWith(upcomingMovies: response.results);
+        }
+      }
+    } catch (err) {
+      yield HomeError(message: err.toString());
+    }
   }
 
   _popularMovies() async {
@@ -36,8 +70,7 @@ class HomeBloc {
     options['page'] = "1";
 
     MoviesResponse response = await _repository.popularMovies(options);
-    logger.i(response);
-    _popularMoviesSubject.sink.add(response.results);
+    return response;
   }
 
   _topRatedMovies() async {
@@ -45,8 +78,7 @@ class HomeBloc {
     options['page'] = "1";
 
     MoviesResponse response = await _repository.topRatedMovies(options);
-    logger.i(response);
-    _topRatedMoviesSubject.sink.add(response.results);
+    return response;
   }
 
   _nowPlayingMovies() async {
@@ -54,8 +86,7 @@ class HomeBloc {
     options['page'] = "1";
 
     MoviesResponse response = await _repository.nowPlaying(options);
-    logger.i(response);
-    _nowPlayingMoviesSubject.sink.add(response.results);
+    return response;
   }
 
   _upcomingMovies() async {
@@ -63,9 +94,6 @@ class HomeBloc {
     options['page'] = "1";
 
     MoviesResponse response = await _repository.upcomingMovies(options);
-    logger.i(response);
-    _upcomingMoviesSubject.sink.add(response.results);
+    return response;
   }
 }
-
-final homeBloc = HomeBloc();

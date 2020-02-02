@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moviedb/ui/discover/bloc/dicover_bloc.dart';
 import 'package:moviedb/ui/discover/bloc/discover_event.dart';
+import 'package:moviedb/ui/home/bloc/home_bloc.dart';
 import 'package:moviedb/ui/home/home_screen.dart';
-import 'package:moviedb/ui/mobiedetails/movie_details_screen.dart';
 import 'package:moviedb/ui/movieslist/bloc/movies_list_bloc.dart';
 
 import 'ui/bloc/simple_bloc_delegate.dart';
@@ -14,6 +14,9 @@ void main() {
 
   var appProvider = MultiBlocProvider(
     providers: [
+      BlocProvider<HomeBloc>(
+        create: (context) => HomeBloc(),
+      ),
       BlocProvider<DiscoverBloc>(
         create: (context) => DiscoverBloc()..add(DiscoverFetch()),
       ),
@@ -37,13 +40,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       home: HomeScreen(),
-//      home: BlocProvider<DiscoverBloc>(
-//        create: (context) => DiscoverBloc()..add(DiscoverFetch()),
-//        child: HomeBlocProvider(
-//          child: HomeScreen(),
-//        ),
-////        child: DiscoverScreen(),
-//      ),
     );
   }
 }
