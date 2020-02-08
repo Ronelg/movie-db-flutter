@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:logger/logger.dart';
 import 'package:moviedb/model/movie.dart';
+import 'package:moviedb/ui/widgets/movie_description.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
-  Movie movie;
+  final Movie movie;
 
   MovieDetailsScreen(this.movie);
 
@@ -18,8 +19,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   void initState() {
-    logger.i("build()");
-    logger.i(widget.movie.posterPath);
+    logger.i(widget.movie.id);
 
     w = _SliverAppBarDelegate2(
       maxHeight: 250,
@@ -32,57 +32,33 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-//    logger.i(widget.movie.toJson());
-    logger.i("build() ${widget.movie.toJson()}");
-
     return Scaffold(
+      backgroundColor: Colors.blueGrey[900],
       body: CustomScrollView(
         slivers: [
-//          SliverAppBar(
-//            pinned: true,
-//            floating: false,
-//            expandedHeight: 200,
-//            backgroundColor: Colors.transparent,
-//            flexibleSpace: FlexibleSpaceBar(
-//              title: Text(widget.movie.title),
-//              background: Image.network(
-//                "https://image.tmdb.org/t/p/w300${widget.movie.backdropPath}",
-//                fit: BoxFit.cover,
-//              ),
-//            ),
-//          ),
-
-//          SliverPersistentHeader(
-//            delegate: MySliverAppBar(expandedHeight: 300),
-//            pinned: true,
-//          ),
-
           SliverPersistentHeader(
+            floating: true,
             delegate: w,
             pinned: true,
           ),
-
-//          SliverPersistentHeader(
-//            pinned: true,
-//            delegate: _SliverAppBarDelegate(
-//              minHeight: kToolbarHeight,
-//              maxHeight: 300,
-//              child: Image.network(
-//                "https://image.tmdb.org/t/p/w300${widget.movie.backdropPath}",
-//                fit: BoxFit.cover,
-//              ),
-//            ),
-//          ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              (_, index) => ListTile(
-                title: Text("Index: $index"),
-              ),
+              (context, index) => _buildList(context, index),
             ),
           )
         ],
       ),
     );
+  }
+
+  _buildList(BuildContext context,int index) {
+    if(index == 0) {
+      return MovieDescription(widget.movie);
+    } else {
+      return ListTile(
+        title: Text("Index: $index", style: Theme.of(context).accentTextTheme.title),
+      );
+    }
   }
 }
 
@@ -186,6 +162,8 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class _SliverAppBarDelegate2 extends SliverPersistentHeaderDelegate {
+  final logger = Logger();
+
   _SliverAppBarDelegate2({
     @required this.minHeight,
     @required this.maxHeight,
@@ -206,6 +184,14 @@ class _SliverAppBarDelegate2 extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+//    logger.i("oppacity: ${1 - (shrinkOffset / maxHeight) }");
+
+    num offset = 1 - (shrinkOffset / (maxHeight * 0.36));
+    num opacity = offset > 0 ? offset : 0.01;
+
+    logger.i(
+        "shrinkOffset: $shrinkOffset maxHeight:${maxHeight} opacity: ${opacity}");
+
     return SizedBox.expand(
       child: Stack(
         overflow: Overflow.visible,
@@ -227,16 +213,16 @@ class _SliverAppBarDelegate2 extends SliverPersistentHeaderDelegate {
             ),
           ),
 
+          // Appbar title
           Positioned(
             top: maxHeight - 100 - kFloatingActionButtonMargin - shrinkOffset,
-            left: kFloatingActionButtonMargin + shrinkOffset * 0.60,
+            left: kFloatingActionButtonMargin + shrinkOffset * 0.6,
             child: Container(
               child: Text(
                 movie.title,
-                style: Theme.of(context).textTheme.title.copyWith(color: Colors.white),
+                style: Theme.of(context).textTheme.title.copyWith(color: Colors.white.withOpacity(opacity)),
               ),
             ),
-
           ),
 
 //          Positioned(
@@ -262,8 +248,5 @@ class _SliverAppBarDelegate2 extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
     return true;
-//    return maxHeight != oldDelegate.maxHeight ||
-//        minHeight != oldDelegate.minHeight ||
-//        child != oldDelegate.child;
   }
 }

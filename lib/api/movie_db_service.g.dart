@@ -115,4 +115,88 @@ class _MovieDbService implements MovieDbService {
     final value = MoviesResponse.fromJson(_result.data);
     return Future.value(value);
   }
+
+  @override
+  getMovieDetails(id, options) async {
+    ArgumentError.checkNotNull(id, 'id');
+    ArgumentError.checkNotNull(options, 'options');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(options ?? <String, dynamic>{});
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/movie/$id',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = MovieDetailsResponse.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
+  getMovieVideos(id, options) async {
+    ArgumentError.checkNotNull(id, 'id');
+    ArgumentError.checkNotNull(options, 'options');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(options ?? <String, dynamic>{});
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/movie/$id/videos',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = MovieVideosResponse.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
+  getMovieSimilar(id, options) async {
+    ArgumentError.checkNotNull(id, 'id');
+    ArgumentError.checkNotNull(options, 'options');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(options ?? <String, dynamic>{});
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/movie/$id/similar',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = MoviesResponse.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
+  getMovieCredits(id, options) async {
+    ArgumentError.checkNotNull(id, 'id');
+    ArgumentError.checkNotNull(options, 'options');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(options ?? <String, dynamic>{});
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        '/movie/$id/credits',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = MovieCreditsResponse.fromJson(_result.data);
+    return Future.value(value);
+  }
 }

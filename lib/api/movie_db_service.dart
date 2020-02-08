@@ -1,3 +1,6 @@
+import 'package:moviedb/model/movie_credits_response.dart';
+import 'package:moviedb/model/movie_details_response.dart';
+import 'package:moviedb/model/movie_videos_response.dart';
 import 'package:moviedb/model/movies_response.dart';
 import 'package:moviedb/util/constants.dart';
 import 'package:retrofit/http.dart';
@@ -33,4 +36,16 @@ abstract class MovieDbService {
 
   @GET('/movie/upcoming')
   Future<MoviesResponse> upcomingMovies(@Queries() Map<String, String> options);
+
+  @GET('/movie/{id}')
+  Future<MovieDetailsResponse> getMovieDetails(@Path() String id, @Queries() Map<String, String> options);
+
+  @GET('/movie/{id}/videos')
+  Future<MovieVideosResponse> getMovieVideos(@Path() String id, @Queries() Map<String, String> options);
+
+  @GET('/movie/{id}/similar')
+  Future<MoviesResponse> getMovieSimilar(@Path() String id, @Queries() Map<String, String> options);
+
+  @GET('/movie/{id}/credits')
+  Future<MovieCreditsResponse> getMovieCredits(@Path() String id, @Queries() Map<String, String> options);
 }
