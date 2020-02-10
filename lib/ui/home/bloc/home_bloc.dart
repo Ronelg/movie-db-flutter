@@ -8,7 +8,7 @@ import '../../injection.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final _repository = Injector.provideMovieRepository();
-  final _logger = Logger();
+  final _logger = Injector.provideLogger();
 
   @override
   HomeState get initialState => HomeUninitialized();

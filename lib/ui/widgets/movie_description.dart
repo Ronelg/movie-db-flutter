@@ -51,6 +51,18 @@ class _MovieDescriptionState extends State<MovieDescription> {
                     style: Theme.of(context).accentTextTheme.body1,
                   ),
                 ),
+                Container(
+                  child: Text(
+                    "Release: ${widget.movie.releaseDate}",
+                    style: Theme.of(context).accentTextTheme.body1,
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    "Release: ${widget.movie.releaseDate}",
+                    style: Theme.of(context).accentTextTheme.body1,
+                  ),
+                ),
               ],
             ),
           )

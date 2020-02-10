@@ -5,6 +5,7 @@ import 'package:moviedb/ui/discover/bloc/dicover_bloc.dart';
 import 'package:moviedb/ui/discover/bloc/discover_event.dart';
 import 'package:moviedb/ui/home/bloc/home_bloc.dart';
 import 'package:moviedb/ui/home/home_screen.dart';
+import 'package:moviedb/ui/mobiedetails/bloc/movie_details_bloc.dart';
 import 'package:moviedb/ui/movieslist/bloc/movies_list_bloc.dart';
 
 import 'ui/bloc/simple_bloc_delegate.dart';
@@ -22,6 +23,9 @@ void main() {
       ),
       BlocProvider<MoviesListBloc>(
         create: (context) => MoviesListBloc(),
+      ),
+      BlocProvider<MovieDetailsBloc>(
+        create: (context) => MovieDetailsBloc(),
       ),
     ],
     child: MyApp(),

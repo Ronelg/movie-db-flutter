@@ -211,6 +211,7 @@ class _SliverAppBarDelegate2 extends SliverPersistentHeaderDelegate {
             flexibleSpace: Container(
               height: maxHeight,
             ),
+
           ),
 
           // Appbar title
@@ -220,7 +221,7 @@ class _SliverAppBarDelegate2 extends SliverPersistentHeaderDelegate {
             child: Container(
               child: Text(
                 movie.title,
-                style: Theme.of(context).textTheme.title.copyWith(color: Colors.white.withOpacity(opacity)),
+                style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white.withOpacity(opacity)),
               ),
             ),
           ),
