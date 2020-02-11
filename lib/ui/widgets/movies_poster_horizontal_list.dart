@@ -5,6 +5,7 @@ import 'package:moviedb/model/collection_type.dart';
 import 'package:moviedb/model/movie.dart';
 import 'package:moviedb/ui/mobiedetails/movie_details_screen.dart';
 import 'package:moviedb/ui/movieslist/movies_list_screen.dart';
+import 'package:moviedb/util/utils.dart';
 
 class MoviesPosterHorizontalList extends StatelessWidget {
   final String _title;
@@ -64,14 +65,14 @@ class MoviesPosterHorizontalList extends StatelessWidget {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context){
+                            builder: (context) {
                               final movie = movies[index];
                               return MovieDetailsScreen(movie);
                             },
                           ),
                         ),
                         child: Image.network(
-                          'https://image.tmdb.org/t/p/w500${movies[index].posterPath}',
+                          Utils.getLargeImageUrl(movies[index].posterPath),
                           fit: BoxFit.cover,
                           width: cellWidth,
                         ),
@@ -85,9 +86,7 @@ class MoviesPosterHorizontalList extends StatelessWidget {
                     movies[index].title,
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),
               ],
@@ -99,11 +98,7 @@ class MoviesPosterHorizontalList extends StatelessWidget {
   Widget _titleWidget(BuildContext context, String title) {
     return Text(
       title,
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.normal,
-        color: Colors.white,
-      ),
+      style: Theme.of(context).textTheme.headline6,
     );
   }
 
@@ -111,11 +106,7 @@ class MoviesPosterHorizontalList extends StatelessWidget {
     return FlatButton(
       child: Text(
         "More",
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.normal,
-          color: Colors.green,
-        ),
+        style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.green),
       ),
       onPressed: () => Navigator.push(
         context,

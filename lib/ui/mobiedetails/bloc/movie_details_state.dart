@@ -59,7 +59,7 @@ class MovieDetailLoaded extends MovieDetailsState {
       'details: { $details } '
       'credits: { $credits } '
       'videos: { $videos }  }'
-      'videos: { $similar }  }';
+      'similar: { $similar }  }';
 }
 
 class MovieDetailsError extends MovieDetailsState {

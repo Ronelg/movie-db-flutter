@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:moviedb/model/movie.dart';
+import 'package:moviedb/model/movie_details_response.dart';
+import 'package:intl/intl.dart';
+import 'package:moviedb/util/utils.dart';
+
+import '../injection.dart';
 
 class MovieDescription extends StatefulWidget {
-  final Movie movie;
+  final MovieDetailsResponse movie;
+  final NumberFormat _formatter = Injector.provideCurrency();
 
   MovieDescription(this.movie);
 
@@ -22,48 +28,51 @@ class _MovieDescriptionState extends State<MovieDescription> {
 //        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Image.network(
-            "https://image.tmdb.org/t/p/w300${widget.movie.posterPath}",
+            Utils.getMediumImageUrl(widget.movie.posterPath),
             fit: BoxFit.cover,
             width: 120,
             height: 200,
           ),
           Expanded(
             flex: 1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment:  MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text(
-                  "Director: ${widget.movie.title}",
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: Theme.of(context).accentTextTheme.body1,
-                ),
-                Container(
-                  child: Text(
-                    "Release: ${widget.movie.releaseDate}",
-                    style: Theme.of(context).accentTextTheme.body1,
+            child: Container(
+              padding: EdgeInsets.only(left: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment:  MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text(
+                    "Budget: ${ widget._formatter.format(widget.movie.budget)}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
-                ),
-                Container(
-                  child: Text(
-                    "Release: ${widget.movie.releaseDate}",
-                    style: Theme.of(context).accentTextTheme.body1,
+                  Container(
+                    child: Text(
+                      "Release: ${widget.movie.releaseDate}",
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
                   ),
-                ),
-                Container(
-                  child: Text(
-                    "Release: ${widget.movie.releaseDate}",
-                    style: Theme.of(context).accentTextTheme.body1,
+                  Container(
+                    child: Text(
+                      "Runtime: ${widget.movie.runtime} min",
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
                   ),
-                ),
-                Container(
-                  child: Text(
-                    "Release: ${widget.movie.releaseDate}",
-                    style: Theme.of(context).accentTextTheme.body1,
+                  Container(
+                    child: Text(
+                      "Rating: ${widget.movie.voteAverage}/10",
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
                   ),
-                ),
-              ],
+                  Container(
+                    child: Text(
+                      "Status: ${widget.movie.status}",
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
         ],

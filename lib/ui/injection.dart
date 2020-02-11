@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:moviedb/api/movie_db_service.dart';
 import 'package:moviedb/repository/movie_db_repository.dart';
@@ -15,5 +16,10 @@ class Injector {
 
   static Logger provideLogger() {
     return Logger();
+  }
+
+  static NumberFormat provideCurrency() {
+    return NumberFormat.currency(locale: "en_US");
+
   }
 }

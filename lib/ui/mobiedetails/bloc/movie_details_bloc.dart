@@ -38,7 +38,10 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
         MoviesResponse similar = await _fetchSimilarMovieVideos();
 
         yield MovieDetailLoaded(
-            details: details, credits: credits, videos: videos, similar: similar);
+            details: details,credits: credits, videos: videos, similar: similar);
+
+//        yield MovieDetailLoaded(
+//            details: details, credits: credits, videos: videos, similar: similar);
       }
     } catch (err) {
       yield MovieDetailsError(message: err.toString());

@@ -5,6 +5,7 @@ import 'package:moviedb/model/collection_type.dart';
 import 'package:moviedb/model/movie.dart';
 import 'package:moviedb/ui/mobiedetails/movie_details_screen.dart';
 import 'package:moviedb/ui/movieslist/movies_list_screen.dart';
+import 'package:moviedb/util/utils.dart';
 
 class MoviesHorizontalList extends StatelessWidget {
   final String _title;
@@ -73,7 +74,7 @@ class MoviesHorizontalList extends StatelessWidget {
                           ),
                         ),
                         child: Image.network(
-                          'https://image.tmdb.org/t/p/w300${movies[index].posterPath}',
+                          Utils.getMediumImageUrl(movies[index].posterPath),
                           fit: BoxFit.cover,
                           width: cellWidth,
                         ),
@@ -87,7 +88,7 @@ class MoviesHorizontalList extends StatelessWidget {
                     movies[index].title,
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).accentTextTheme.subtitle,
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),
               ],
@@ -99,7 +100,7 @@ class MoviesHorizontalList extends StatelessWidget {
   Widget _titleWidget(BuildContext context, String title) {
     return Text(
       title,
-      style: Theme.of(context).accentTextTheme.title,
+      style: Theme.of(context).textTheme.headline6
     );
   }
 
@@ -107,7 +108,7 @@ class MoviesHorizontalList extends StatelessWidget {
     return FlatButton(
       child: Text(
         "More",
-        style: Theme.of(context).accentTextTheme.title.copyWith(
+        style: Theme.of(context).textTheme.headline6.copyWith(
               color: Colors.green,
             ),
       ),
