@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:moviedb/model/movie_videos_response.dart';
-import 'package:moviedb/ui/injection.dart';
+import 'package:moviedb/model/movie_credits_response.dart';
 import 'package:moviedb/util/utils.dart';
 
-class MovieRelatedVideos extends StatelessWidget {
-  final List<MovieVideo> _videos;
-  final logger = Injector.provideLogger();
+class MovieCast extends StatelessWidget {
+  final List<Cast> _casts;
 
-  MovieRelatedVideos(this._videos);
+  MovieCast(this._casts);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +15,12 @@ class MovieRelatedVideos extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Divider(color: Colors.green,),
+          Divider(
+            color: Colors.green,
+          ),
           _buildTitle(context),
-          _buildVideosList(context),
+          buildCastList(context),
+//          _buildVideosList(context),
         ],
       ),
     );
@@ -30,21 +31,21 @@ class MovieRelatedVideos extends StatelessWidget {
       margin: EdgeInsets.only(top: 8.0, bottom: 8.0),
       alignment: Alignment.topLeft,
       child: Text(
-        "Videos",
+        "Casts",
         style: Theme.of(context).textTheme.headline6,
       ),
     );
   }
 
-  _buildVideosList(BuildContext context) {
+  buildCastList(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height *0.2,
+      height: MediaQuery.of(context).size.height * 0.2,
       width: MediaQuery.of(context).size.width,
       child: ListView.builder(
-        itemCount: _videos.length ?? 0,
+        itemCount: _casts.length ?? 0,
         shrinkWrap: false,
         scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) => _buildVideoItem2(context, index),
+        itemBuilder: (context, index) => _buildVideoItem(context, index),
       ),
     );
   }
@@ -53,21 +54,9 @@ class MovieRelatedVideos extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(right: 8.0),
       child: Image.network(
-        Utils.youtubeVideoThumbnail(_videos[index].key),
+        Utils.getMediumImageUrl(_casts[index].profilePath),
         fit: BoxFit.cover,
       ),
-    );
-  }
-
-  _buildVideoItem2(BuildContext context, int index) {
-    return Container(
-//      padding: EdgeInsets.only(right: 8.0),
-      child: Card(
-        child: Image.network(
-          Utils.youtubeVideoThumbnail(_videos[index].key),
-          fit: BoxFit.cover,
-        ),
-      )
     );
   }
 }

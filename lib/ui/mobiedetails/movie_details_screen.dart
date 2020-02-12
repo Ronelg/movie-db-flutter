@@ -6,6 +6,7 @@ import 'package:moviedb/model/movie.dart';
 import 'package:moviedb/ui/mobiedetails/bloc/movie_details_bloc.dart';
 import 'package:moviedb/ui/mobiedetails/bloc/movie_details_event.dart';
 import 'package:moviedb/ui/mobiedetails/bloc/movie_details_state.dart';
+import 'package:moviedb/ui/widgets/movie_cast_list.dart';
 import 'package:moviedb/ui/widgets/movie_description.dart';
 import 'package:moviedb/ui/widgets/movie_overview_widget.dart';
 import 'package:moviedb/ui/widgets/movie_related_videos.dart';
@@ -59,6 +60,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             child: Container(
 //              height: 400,
               child: _buildVideos(context),
+            ),
+          ), SliverToBoxAdapter(
+            child: Container(
+//              height: 400,
+              child: _buildMocieCast(context),
             ),
           ),
         ],
@@ -181,18 +187,29 @@ Widget _buildVideos(BuildContext context) {
     if (state is MovieDetailLoaded) {
       if (state.videos != null) {
         return Container(
-            child: MovieRelatedVideos(
-          state.videos.results,
-        ));
-      } else {
-        return Container(
-          child: Text("null"),
+          child: MovieRelatedVideos(state.videos.results),
         );
+      } else {
+        return Container();
       }
     }
 
-    return Container(
-      child: Text("State"),
-    );
+    return Container();
+  });
+}
+
+Widget _buildMocieCast(BuildContext context) {
+  return BlocBuilder<MovieDetailsBloc, MovieDetailsState>(builder: (context, state) {
+    if (state is MovieDetailLoaded) {
+      if (state.videos != null) {
+        return Container(
+          child: MovieCast(state.credits.cast),
+        );
+      } else {
+        return Container();
+      }
+    }
+
+    return Container();
   });
 }
