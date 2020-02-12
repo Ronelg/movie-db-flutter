@@ -38,28 +38,18 @@ class MovieRelatedVideos extends StatelessWidget {
 
   _buildVideosList(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height *0.2,
+      height: MediaQuery.of(context).size.height *0.3,
       width: MediaQuery.of(context).size.width,
       child: ListView.builder(
         itemCount: _videos.length ?? 0,
         shrinkWrap: false,
         scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) => _buildVideoItem2(context, index),
+        itemBuilder: (context, index) => _buildVideoItem(context, index),
       ),
     );
   }
 
   _buildVideoItem(BuildContext context, int index) {
-    return Container(
-      padding: EdgeInsets.only(right: 8.0),
-      child: Image.network(
-        Utils.youtubeVideoThumbnail(_videos[index].key),
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  _buildVideoItem2(BuildContext context, int index) {
     return Container(
 //      padding: EdgeInsets.only(right: 8.0),
       child: Card(

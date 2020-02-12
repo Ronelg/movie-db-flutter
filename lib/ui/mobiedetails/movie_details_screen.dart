@@ -28,7 +28,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   @override
   void initState() {
     _bloc = BlocProvider.of<MovieDetailsBloc>(context);
-    logger.i(widget.movie.id);
 
     w = _SliverAppBarDelegate2(
       maxHeight: 250,
@@ -64,7 +63,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           ), SliverToBoxAdapter(
             child: Container(
 //              height: 400,
-              child: _buildMocieCast(context),
+              child: _buildMovieCast(context),
             ),
           ),
         ],
@@ -107,12 +106,8 @@ class _SliverAppBarDelegate2 extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-//    logger.i("oppacity: ${1 - (shrinkOffset / maxHeight) }");
-
     num offset = 1 - (shrinkOffset / (maxHeight * 0.36));
     num opacity = offset > 0 ? offset : 0.01;
-
-    logger.i("shrinkOffset: $shrinkOffset maxHeight:${maxHeight} opacity: ${opacity}");
 
     return SizedBox.expand(
       child: Stack(
@@ -198,7 +193,7 @@ Widget _buildVideos(BuildContext context) {
   });
 }
 
-Widget _buildMocieCast(BuildContext context) {
+Widget _buildMovieCast(BuildContext context) {
   return BlocBuilder<MovieDetailsBloc, MovieDetailsState>(builder: (context, state) {
     if (state is MovieDetailLoaded) {
       if (state.videos != null) {

@@ -1,11 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moviedb/model/movie_credits_response.dart';
 import 'package:moviedb/util/utils.dart';
 
 class MovieCast extends StatelessWidget {
-  final List<Cast> _casts;
+   List<Cast> _casts;
 
-  MovieCast(this._casts);
+  MovieCast(List<Cast> casts){
+    casts.removeWhere((element) => element.profilePath == null);
+    _casts = casts;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +23,7 @@ class MovieCast extends StatelessWidget {
             color: Colors.green,
           ),
           _buildTitle(context),
-          buildCastList(context),
-//          _buildVideosList(context),
+          _buildCastList(context),
         ],
       ),
     );
@@ -37,25 +40,54 @@ class MovieCast extends StatelessWidget {
     );
   }
 
-  buildCastList(BuildContext context) {
+  _buildCastList(BuildContext context) {
+    final listHeight = MediaQuery.of(context).size.height * 0.3;
+    final listWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      height: MediaQuery.of(context).size.height * 0.2,
-      width: MediaQuery.of(context).size.width,
+      height: listHeight,
+      width: listWidth,
       child: ListView.builder(
         itemCount: _casts.length ?? 0,
         shrinkWrap: false,
         scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) => _buildVideoItem(context, index),
+        itemBuilder: (context, index) => _buildCastItem(context, index),
       ),
     );
   }
 
-  _buildVideoItem(BuildContext context, int index) {
+  _buildCastItem(BuildContext context, int index) {
+    final double cellWidth = 120;
+
     return Container(
       padding: EdgeInsets.only(right: 8.0),
-      child: Image.network(
-        Utils.getMediumImageUrl(_casts[index].profilePath),
-        fit: BoxFit.cover,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              width: cellWidth,
+              child: Image.network(
+                Utils.getMediumImageUrl(_casts[index].profilePath),
+                fit: BoxFit.cover,
+              ),
+            ),
+            flex: 3,
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              width: cellWidth,
+              padding: EdgeInsets.only(top: 8.0),
+              child: Text(
+                _casts[index].name,
+                overflow: TextOverflow.clip,
+                maxLines: 3,
+                style: Theme.of(context).textTheme.subtitle2,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
