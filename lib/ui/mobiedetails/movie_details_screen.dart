@@ -10,6 +10,7 @@ import 'package:moviedb/ui/widgets/movie_cast_list.dart';
 import 'package:moviedb/ui/widgets/movie_description.dart';
 import 'package:moviedb/ui/widgets/movie_overview_widget.dart';
 import 'package:moviedb/ui/widgets/movie_related_videos.dart';
+import 'package:moviedb/util/utils.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final Movie movie;
@@ -115,7 +116,8 @@ class _SliverAppBarDelegate2 extends SliverPersistentHeaderDelegate {
         fit: StackFit.expand,
         children: <Widget>[
           Image.network(
-            "https://image.tmdb.org/t/p/w300${movie.backdropPath}",
+//            "https://image.tmdb.org/t/p/w300${movie.backdropPath}",
+            Utils.getMediumImageUrl(movie.backdropPath),
             fit: BoxFit.cover,
           ),
 

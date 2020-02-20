@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moviedb/model/movie_videos_response.dart';
 import 'package:moviedb/ui/injection.dart';
 import 'package:moviedb/util/utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MovieRelatedVideos extends StatelessWidget {
   final List<MovieVideo> _videos;
@@ -53,11 +54,23 @@ class MovieRelatedVideos extends StatelessWidget {
     return Container(
 //      padding: EdgeInsets.only(right: 8.0),
       child: Card(
-        child: Image.network(
-          Utils.youtubeVideoThumbnail(_videos[index].key),
-          fit: BoxFit.cover,
+        child: GestureDetector(
+          child: Image.network(
+            Utils.youtubeVideoThumbnail(_videos[index].key),
+            fit: BoxFit.cover,
+          ),
+          onTap: () => __launchURL(_videos[index].key),
         ),
       )
     );
+  }
+
+  __launchURL(String videoId) async {
+    String url = 'https://www.youtube.com/watch?v=$videoId';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
