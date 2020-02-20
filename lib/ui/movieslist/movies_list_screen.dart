@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
@@ -6,6 +7,7 @@ import 'package:moviedb/model/movie.dart';
 import 'package:moviedb/ui/mobiedetails/movie_details_screen.dart';
 import 'package:moviedb/ui/movieslist/bloc/movies_list_event.dart';
 import 'package:moviedb/ui/movieslist/bloc/movies_list_state.dart';
+import 'package:moviedb/util/utils.dart';
 
 import 'bloc/movies_list_bloc.dart';
 
@@ -39,7 +41,6 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
       appBar: AppBar(
         title: _title(),
       ),
-      backgroundColor: Colors.black87,
       body: BlocBuilder<MoviesListBloc, MoviesListState>(
         builder: (context, state) {
           if (state is MoviesListLoaded) {
@@ -81,9 +82,19 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
                 builder: (context) => MovieDetailsScreen(snapshot[index]),
               ),
             ),
-            child: Image.network(
-              'https://image.tmdb.org/t/p/w185${snapshot[index].posterPath}',
-              fit: BoxFit.cover,
+//            child: Image.network(
+//              'https://image.tmdb.org/t/p/w185${snapshot[index].posterPath}',
+//              fit: BoxFit.cover,
+//            ),
+
+            child: CachedNetworkImage(
+              imageUrl: Utils.getSmallImageUrl(snapshot[index].posterPath),
+              placeholder: (context, url) => Icon(
+                Icons.local_movies,
+                size: 48,
+                color: Colors.black87,
+              ),
+              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
           );
         },

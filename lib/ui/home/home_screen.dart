@@ -64,53 +64,45 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 Widget _buildPopularList(BuildContext context, String title) {
-  return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        if (state is HomeLoaded) {
-          if (state.popularMovies != null) {
-            return MoviesHorizontalList(title, state.popularMovies, CollectionType.PopularMovies);
-          }
-        }
-        return Container();
+  return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+    if (state is HomeLoaded) {
+      if (state.popularMovies != null) {
+        return MoviesHorizontalList(title, state.popularMovies, CollectionType.PopularMovies);
       }
-  );
+    }
+    return Container();
+  });
 }
 
 Widget _buildTopRatedList(BuildContext context, String title) {
-  return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        if (state is HomeLoaded) {
-          if (state.topRatedMovies != null) {
-            return MoviesHorizontalList(title, state.topRatedMovies, CollectionType.TopRatedMovies);
-          }
-        }
-        return Container();
+  return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+    if (state is HomeLoaded) {
+      if (state.topRatedMovies != null) {
+        return MoviesHorizontalList(title, state.topRatedMovies, CollectionType.TopRatedMovies);
       }
-  );
+    }
+    return Container();
+  });
 }
 
 Widget _buildUpcomingList(BuildContext context, String title) {
-  return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        if (state is HomeLoaded) {
-          if (state.upcomingMovies != null) {
-            return MoviesHorizontalList(title, state.upcomingMovies, CollectionType.UpcomingMovies);
-          }
-        }
-        return Container();
+  return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+    if (state is HomeLoaded) {
+      if (state.upcomingMovies != null) {
+        return MoviesHorizontalList(title, state.upcomingMovies, CollectionType.UpcomingMovies);
       }
-  );
+    }
+    return Container();
+  });
 }
 
 Widget _buildNowPlayingList(BuildContext context, String title) {
-  return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        if (state is HomeLoaded) {
-          if (state.nowPlaying != null) {
-            return MoviesPosterHorizontalList(title, state.nowPlaying, CollectionType.NowPlayingMovies);
-          }
-        }
-        return Container();
+  return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+    if (state is HomeLoaded) {
+      if (state.nowPlaying != null) {
+        return MoviesPosterHorizontalList(title, state.nowPlaying, CollectionType.NowPlayingMovies);
       }
-  );
+    }
+    return Container();
+  });
 }
