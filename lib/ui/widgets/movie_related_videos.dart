@@ -18,7 +18,7 @@ class MovieRelatedVideos extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Divider(color: Colors.green,),
+          Divider(color: Colors.deepOrange,),
           _buildTitle(context),
           _buildVideosList(context),
         ],

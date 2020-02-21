@@ -38,10 +38,12 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
         MoviesResponse similar = await _fetchSimilarMovieVideos();
 
         yield MovieDetailLoaded(
-            details: details,credits: credits, videos: videos, similar: similar);
+          details: details,
+          credits: credits,
+          videos: videos,
+          similar: similar,
+        );
 
-//        yield MovieDetailLoaded(
-//            details: details, credits: credits, videos: videos, similar: similar);
       }
     } catch (err) {
       yield MovieDetailsError(message: err.toString());
@@ -51,6 +53,7 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
   _fetchMovieDetails() async {
     Map<String, String> options = Map<String, String>();
 
+    _logger.i(movie.id.toString());
     MovieDetailsResponse response = await _repository.movieDetails(movie.id.toString(), options);
     return response;
   }

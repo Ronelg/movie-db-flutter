@@ -20,7 +20,7 @@ class MovieCast extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Divider(
-            color: Colors.green,
+            color: Colors.deepOrange,
           ),
           _buildTitle(context),
           _buildCastList(context),

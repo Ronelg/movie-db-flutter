@@ -13,7 +13,7 @@ class MovieOverview extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Divider(
-            color: Colors.green,
+            color: Colors.deepOrange,
           ),
           Container(
             padding: EdgeInsets.only(top: 8.0),

@@ -114,7 +114,7 @@ class MoviesHorizontalList extends StatelessWidget {
       child: Text(
         "More",
         style: Theme.of(context).textTheme.headline6.copyWith(
-              color: Colors.green,
+              color: Colors.deepOrange,
             ),
       ),
       onPressed: () => Navigator.push(

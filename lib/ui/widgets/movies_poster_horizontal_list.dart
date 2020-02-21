@@ -106,7 +106,9 @@ class MoviesPosterHorizontalList extends StatelessWidget {
     return FlatButton(
       child: Text(
         "More",
-        style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.green),
+        style: Theme.of(context).textTheme.headline6.copyWith(
+              color: Colors.deepOrange,
+            ),
       ),
       onPressed: () => Navigator.push(
         context,
