@@ -58,10 +58,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           ),
           SliverToBoxAdapter(
             child: Container(
-//              height: 400,
               child: _buildVideos(context),
             ),
-          ), SliverToBoxAdapter(
+          ),
+          SliverToBoxAdapter(
             child: Container(
 //              height: 400,
               child: _buildMovieCast(context),
@@ -116,7 +116,6 @@ class _SliverAppBarDelegate2 extends SliverPersistentHeaderDelegate {
         fit: StackFit.expand,
         children: <Widget>[
           Image.network(
-//            "https://image.tmdb.org/t/p/w300${movie.backdropPath}",
             Utils.getMediumImageUrl(movie.backdropPath),
             fit: BoxFit.cover,
           ),
@@ -164,7 +163,12 @@ Widget _buildMovieDetails(BuildContext context) {
         return MovieDescription(state.details);
       }
     }
-    return Container();
+    return Container(
+      height: MediaQuery.of(context).size.height / 2,
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   });
 }
 
